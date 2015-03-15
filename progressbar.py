@@ -5,6 +5,13 @@ import time
 class ProgressBar(object):
 
     def __init__(self, max_value, fill_character="#", rem_character="-", update_time=0.04, width=80):
+        """
+            @max_value - number, maximal value that progress bar is allowed to use
+            @fill_character - char that fills the progress_bar
+            @rem_character - char that fills what remains after fill_character
+            @update_time - how often the progress bar is updated
+            @width - progress bar width
+        """
         self.cur_value = 0
         self.max_value = max_value
         self.fill_char = fill_character
@@ -18,6 +25,7 @@ class ProgressBar(object):
         self.print_bar(cur_value=0)
 
     def update(self, cur_value, extra_text=""):
+        """Updates progress bar state"""
         if cur_value > self.max_value + 1:
             raise ValueError("Update value is too big.")
 
@@ -33,6 +41,7 @@ class ProgressBar(object):
             self.cur_time = time.time()
 
     def print_bar(self, cur_value, extra_text=""):
+        """Actually draws the progress bar"""
         ratio = cur_value / self.max_value
         current_progress = int(ratio * 100)
         num_of_hashes = int(ratio * self.effective_width)
